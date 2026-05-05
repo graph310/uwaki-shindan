@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>あなたの状況を整理する｜無料チェック診断</title>
+<title>状況チェック診断｜ALG探偵社</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Noto+Serif+JP:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
@@ -22,19 +22,33 @@
 html{font-size:16px;scroll-behavior:smooth;}
 body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;min-height:100vh;}
 
-/* ===== FV ===== */
-.fv{position:relative;background:#fff;}
-.fv-img{width:100%;display:block;}
-/* 透明クリックエリア：画像内「無料診断をはじめる」ボタン位置 */
-.fv-overlay-link{
-  position:absolute;
-  left:18%;right:28%;bottom:7%;height:6%;
-  display:block;cursor:pointer;border-radius:50px;
-  /* デバッグ用: background:rgba(255,0,0,.25); */
+/* ===== ヘッダー ===== */
+.page-header{
+  background:#fff;
+  padding:14px 16px;
+  border-bottom:1px solid #F0E8EA;
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.back-link{
+  color:var(--text-light);
+  font-size:13px;
+  text-decoration:none;
+  display:flex;
+  align-items:center;
+  gap:4px;
+}
+.back-link:hover{color:var(--red);}
+.page-header-title{
+  font-size:13px;
+  font-weight:700;
+  color:var(--text-mid);
+  letter-spacing:.04em;
 }
 
 /* ===== 診断 ===== */
-.shindan-section{padding:32px 16px 40px;}
+.shindan-section{padding:28px 16px 40px;}
 .shindan-header{text-align:center;margin-bottom:28px;}
 .shindan-tag{display:inline-block;background:var(--red);color:#fff;font-size:11px;font-weight:700;letter-spacing:.1em;padding:4px 14px;border-radius:20px;margin-bottom:10px;}
 .shindan-title{font-size:19px;font-weight:900;font-family:'Noto Serif JP',serif;line-height:1.5;color:var(--text);}
@@ -114,13 +128,12 @@ footer{padding:20px 16px 32px;text-align:center;font-size:11px;color:#BBB;border
 </head>
 <body>
 
-<!-- FV：img/fv_bg.png を表示。ボタン部分だけ透明リンクで覆う -->
-<div class="fv">
-  <img src="img/fv_bg.png" class="fv-img" alt="ひとりで悩まないで。まずは、あなたの気持ちを整理してみませんか？">
-  <a href="shindan.html" class="fv-overlay-link" aria-label="無料診断をはじめる"></a>
-</div>
+<header class="page-header">
+  <a href="index.html" class="back-link">← 戻る</a>
+  <span class="page-header-title">無料チェック診断</span>
+</header>
 
-<div class="shindan-section" id="shindan-section">
+<div class="shindan-section">
   <div class="shindan-header">
     <div class="shindan-tag">無料チェック診断</div>
     <h2 class="shindan-title">今の状況を、<em>6問</em>で整理しましょう</h2>
@@ -340,7 +353,7 @@ function nextQ(n){
   document.getElementById('q'+n).classList.remove('active');
   document.getElementById('q'+(n+1)).classList.add('active');
   updateProgress(n+1);
-  window.scrollTo({top:document.getElementById('shindan-section').offsetTop-60,behavior:'smooth'});
+  window.scrollTo({top:0,behavior:'smooth'});
 }
 function calcScore(){
   let s=0;
@@ -359,11 +372,12 @@ function showResult(){
   document.getElementById('progressFill').style.width='100%';
   document.getElementById('progressText').textContent='診断完了';
   document.getElementById('progressPct').textContent='100%';
-  const t=calcScore()>=7?'red':calcScore()>=3?'yellow':'green';
+  const sc=calcScore();
+  const t=sc>=7?'red':sc>=3?'yellow':'green';
   document.getElementById('result-section').style.display='block';
   document.getElementById('result-section').classList.add('active');
   document.getElementById('result-'+t).style.display='block';
-  window.scrollTo({top:document.getElementById('result-section').offsetTop-40,behavior:'smooth'});
+  window.scrollTo({top:0,behavior:'smooth'});
 }
 function resetShindan(){
   Object.assign(answers,{q1:null,q2:[],q3:null,q4:null,q5:null,q6:null});q2c=[];
@@ -377,7 +391,7 @@ function resetShindan(){
   ['green','yellow','red'].forEach(t=>document.getElementById('result-'+t).style.display='none');
   document.getElementById('q1').classList.add('active');
   updateProgress(1);
-  window.scrollTo({top:document.getElementById('shindan-section').offsetTop-60,behavior:'smooth'});
+  window.scrollTo({top:0,behavior:'smooth'});
 }
 updateProgress(1);
 </script>
