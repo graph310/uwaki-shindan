@@ -11,22 +11,34 @@ body{background:#fff;}
 .fv-img{width:100%;display:block;}
 .fv-overlay-link{
   position:absolute;
+  display:block;
+  cursor:pointer;
+}
+/* 中央ALGバナー部分 */
+.fv-banner-link{
+  left:0;
+  right:0;
+  top:65%;
+  height:6.5%;
+}
+/* 無料診断をはじめるボタン */
+.fv-cta-link{
   left:18%;
   right:28%;
   bottom:7%;
   height:6%;
-  display:block;
-  cursor:pointer;
   border-radius:50px;
 }
-.banner-wrap{
+/* 一番下テキストリンク */
+.text-link-wrap{
   text-align:center;
-  padding:12px 0;
+  padding:10px 16px 16px;
   background:#fff;
+  font-size:12px;
 }
-.banner-wrap img[width="468"]{
-  max-width:100%;
-  height:auto;
+.text-link-wrap a{
+  color:#888;
+  text-decoration:underline;
 }
 </style>
 </head>
@@ -34,15 +46,29 @@ body{background:#fff;}
 
 <div class="fv">
   <img src="img/fv_bg.png" class="fv-img" alt="ひとりで悩まないで。まずは、あなたの気持ちを整理してみませんか？">
-  <a href="shindan.html" class="fv-overlay-link" aria-label="無料診断をはじめる"></a>
+
+  <!-- 中央のALGバナー部分 → A8バナーリンク -->
+  <a href="https://px.a8.net/svt/ejp?a8mat=4B3IIJ+AM8DGQ+3IKY+609HT"
+     rel="nofollow noopener" target="_blank"
+     class="fv-overlay-link fv-banner-link"
+     aria-label="ALG探偵社 詳細を見る"></a>
+
+  <!-- 「無料診断をはじめる」ボタン → 診断ページ -->
+  <a href="shindan.html"
+     class="fv-overlay-link fv-cta-link"
+     aria-label="無料診断をはじめる"></a>
 </div>
 
-<!-- A8バナー -->
-<div class="banner-wrap">
-  <a href="https://px.a8.net/svt/ejp?a8mat=4B3IIJ+AM8DGQ+3IKY+609HT" rel="nofollow noopener" target="_blank">
-    <img border="0" width="468" height="60" alt="" src="https://www21.a8.net/svt/bgt?aid=260504443642&wid=004&eno=01&mid=s00000016405001009000&mc=1">
+<!-- A8トラッキングピクセル（バナー用） -->
+<img border="0" width="1" height="1" src="https://www16.a8.net/0.gif?a8mat=4B3IIJ+AM8DGQ+3IKY+609HT" alt="">
+
+<!-- 一番下：テキストリンク -->
+<div class="text-link-wrap">
+  <a href="https://px.a8.net/svt/ejp?a8mat=4B3IIJ+AM8DGQ+3IKY+5YJRM"
+     rel="nofollow noopener" target="_blank">
+    所属90名以上大手弁護士法人グループの探偵会社
   </a>
-  <img border="0" width="1" height="1" src="https://www16.a8.net/0.gif?a8mat=4B3IIJ+AM8DGQ+3IKY+609HT" alt="">
+  <img border="0" width="1" height="1" src="https://www18.a8.net/0.gif?a8mat=4B3IIJ+AM8DGQ+3IKY+5YJRM" alt="">
 </div>
 
 </body>
