@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>あなたの状況を整理する｜無料チェック診断</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Noto+Serif+JP:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+:root{
+  --red:#E8445A;
+  --red-dark:#C4243A;
+  --red-light:#FEF0F2;
+  --red-pale:#FFF7F8;
+  --text:#2A2A2A;
+  --text-mid:#555;
+  --text-light:#888;
+  --border:#EEE;
+  --white:#FFF;
+  --bg:#FAF9F8;
+  --gold:#B8925A;
+}
+html{font-size:16px;scroll-behavior:smooth;}
+body{
+  font-family:'Noto Sans JP',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.7;
+  min-height:100vh;
+}
+
+/* ===== NOTICE BAR ===== */
+.notice-bar{
+  background:var(--red);
+  color:#fff;
+  text-align:center;
+  padding:10px 16px;
+  font-size:13px;
+  font-weight:500;
+  letter-spacing:.02em;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:6px;
+}
+.notice-bar span{font-size:15px;}
+
+/* ===== FV ===== */
+.fv{
+  position:relative;
+  background:#fff;
+  overflow:hidden;
+  min-height:520px;
+}
+.fv-img{
+  width:100%;
+  display:block;
+  object-fit:cover;
+}
+/* FV下のサブコピー帯 */
+.fv-sub{
+  background:#fff;
+  padding:14px 20px 18px;
+  border-bottom:1px solid #F0E8E8;
+}
+.fv-sub-text{
+  font-size:13px;
+  color:var(--text-mid);
+  letter-spacing:.04em;
+  border-left:3px solid var(--red);
+  padding-left:10px;
+}
+
+/* ===== 3アイコン ===== */
+.icons-section{
+  background:#fff;
+  padding:24px 16px 28px;
+}
+.icons-row{
+  display:flex;
+  justify-content:space-around;
+  gap:8px;
+}
+.icon-item{
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:10px;
+}
+.icon-circle{
+  width:64px;height:64px;
+  border-radius:50%;
+  border:1.5px solid #E8D0D4;
+  display:flex;align-items:center;justify-content:center;
+  font-size:26px;
+  background:#fff;
+  box-shadow:0 2px 8px rgba(232,68,90,.08);
+}
+.icon-label{
+  font-size:11.5px;
+  text-align:center;
+  line-height:1.5;
+  color:var(--text-mid);
+}
+.icon-label em{
+  color:var(--red);
+  font-style:normal;
+  font-weight:700;
+}
+
+/* ===== 共感帯 ===== */
+.empathy-section{
+  background:var(--red-light);
+  padding:26px 20px;
+  text-align:center;
+  border-top:1px solid #F5D0D5;
+  border-bottom:1px solid #F5D0D5;
+}
+.empathy-lead{
+  color:var(--red);
+  font-size:15px;
+  font-weight:700;
+  font-family:'Noto Serif JP',serif;
+  margin-bottom:10px;
+}
+.empathy-body{
+  font-size:13.5px;
+  color:var(--text-mid);
+  line-height:1.9;
+}
+.empathy-note{
+  margin-top:16px;
+  font-size:12.5px;
+  color:var(--text-light);
+  border-top:1px dashed #DCC;
+  padding-top:12px;
+  line-height:1.8;
+}
+.empathy-note strong{color:var(--text-mid);}
+
+/* ===== 診断セクション ===== */
+.shindan-section{
+  padding:32px 16px 40px;
+}
+.shindan-header{
+  text-align:center;
+  margin-bottom:28px;
+}
+.shindan-tag{
+  display:inline-block;
+  background:var(--red);
+  color:#fff;
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:.1em;
+  padding:4px 14px;
+  border-radius:20px;
+  margin-bottom:10px;
+}
+.shindan-title{
+  font-size:19px;
+  font-weight:900;
+  font-family:'Noto Serif JP',serif;
+  line-height:1.5;
+  color:var(--text);
+}
+.shindan-title em{
+  color:var(--red);
+  font-style:normal;
+}
+.shindan-sub{
+  font-size:12.5px;
+  color:var(--text-light);
+  margin-top:6px;
+}
+
+/* ===== プログレスバー ===== */
+.progress-wrap{
+  margin-bottom:28px;
+}
+.progress-label{
+  display:flex;
+  justify-content:space-between;
+  font-size:11.5px;
+  color:var(--text-light);
+  margin-bottom:6px;
+}
+.progress-label span{color:var(--red);font-weight:700;}
+.progress-bar{
+  height:6px;
+  background:#EEE;
+  border-radius:10px;
+  overflow:hidden;
+}
+.progress-fill{
+  height:100%;
+  background:linear-gradient(90deg,var(--red-dark),var(--red));
+  border-radius:10px;
+  transition:width .4s ease;
+}
+
+/* ===== 質問カード ===== */
+.q-card{
+  background:#fff;
+  border-radius:16px;
+  padding:24px 18px 20px;
+  box-shadow:0 2px 16px rgba(0,0,0,.06);
+  border:1px solid #F0E8EA;
+  display:none;
+  animation:fadeUp .35s ease;
+}
+.q-card.active{display:block;}
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(12px);}
+  to{opacity:1;transform:translateY(0);}
+}
+.q-num{
+  font-size:11px;
+  font-weight:700;
+  color:var(--red);
+  letter-spacing:.1em;
+  margin-bottom:6px;
+}
+.q-text{
+  font-size:15.5px;
+  font-weight:700;
+  font-family:'Noto Serif JP',serif;
+  line-height:1.65;
+  color:var(--text);
+  margin-bottom:18px;
+}
+.q-note{
+  font-size:11px;
+  color:var(--text-light);
+  margin-bottom:14px;
+  margin-top:-12px;
+}
+
+/* ===== 選択肢 ===== */
+.options{display:flex;flex-direction:column;gap:10px;}
+.opt-btn{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:14px 16px;
+  background:#FAFAFA;
+  border:1.5px solid #E8E0E2;
+  border-radius:10px;
+  cursor:pointer;
+  font-size:14px;
+  color:var(--text);
+  font-weight:500;
+  transition:all .2s;
+  text-align:left;
+  width:100%;
+  font-family:'Noto Sans JP',sans-serif;
+}
+.opt-btn:hover{
+  background:var(--red-light);
+  border-color:var(--red);
+  color:var(--red-dark);
+}
+.opt-btn.selected{
+  background:var(--red-light);
+  border-color:var(--red);
+  color:var(--red-dark);
+}
+.opt-icon{
+  width:28px;height:28px;
+  border-radius:50%;
+  background:#F0ECF0;
+  display:flex;align-items:center;justify-content:center;
+  font-size:14px;
+  flex-shrink:0;
+  transition:background .2s;
+}
+.opt-btn.selected .opt-icon{background:var(--red);color:#fff;}
+
+/* 複数選択用チェック */
+.opt-btn.multi{position:relative;}
+.opt-check{
+  width:20px;height:20px;
+  border:2px solid #CCC;
+  border-radius:4px;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+  font-size:11px;
+  transition:all .2s;
+}
+.opt-btn.checked .opt-check{
+  background:var(--red);
+  border-color:var(--red);
+  color:#fff;
+}
+.opt-btn.checked{
+  background:var(--red-light);
+  border-color:var(--red);
+}
+
+/* 次へボタン */
+.next-btn{
+  display:none;
+  width:100%;
+  margin-top:14px;
+  padding:15px;
+  background:linear-gradient(135deg,var(--red-dark),var(--red));
+  color:#fff;
+  border:none;
+  border-radius:12px;
+  font-size:15px;
+  font-weight:700;
+  font-family:'Noto Sans JP',sans-serif;
+  cursor:pointer;
+  letter-spacing:.05em;
+  box-shadow:0 4px 16px rgba(232,68,90,.35);
+  transition:transform .15s,box-shadow .15s;
+}
+.next-btn:active{transform:scale(.98);}
+.next-btn.show{display:block;}
+
+/* ===== 結果画面 ===== */
+#result-section{display:none;}
+#result-section.active{display:block;animation:fadeUp .4s ease;}
+
+.result-wrap{
+  background:#fff;
+  border-radius:16px;
+  overflow:hidden;
+  box-shadow:0 2px 20px rgba(0,0,0,.08);
+  border:1px solid #F0E8EA;
+  margin-bottom:24px;
+}
+.result-header{
+  padding:24px 20px 20px;
+  text-align:center;
+}
+.result-type-tag{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  padding:6px 18px;
+  border-radius:20px;
+  font-size:12px;
+  font-weight:700;
+  letter-spacing:.08em;
+  margin-bottom:14px;
+}
+.type-green .result-type-tag{background:#E8F5E9;color:#2E7D32;}
+.type-yellow .result-type-tag{background:#FFF8E1;color:#E65100;}
+.type-red .result-type-tag{background:#FFEBEE;color:#C62828;}
+
+.result-icon{font-size:48px;margin-bottom:12px;display:block;}
+.result-title{
+  font-size:18px;
+  font-weight:700;
+  font-family:'Noto Serif JP',serif;
+  line-height:1.55;
+  color:var(--text);
+  margin-bottom:6px;
+}
+.result-title em{
+  font-style:normal;
+}
+.type-green .result-title em{color:#2E7D32;}
+.type-yellow .result-title em{color:#E65100;}
+.type-red .result-title em{color:var(--red);}
+
+.result-divider{
+  height:1px;
+  background:linear-gradient(90deg,transparent,#EEE,transparent);
+  margin:0 20px;
+}
+.result-body{
+  padding:20px;
+}
+.result-desc{
+  font-size:14px;
+  color:var(--text-mid);
+  line-height:1.85;
+  margin-bottom:16px;
+}
+.result-points{
+  background:var(--bg);
+  border-radius:10px;
+  padding:16px;
+  margin-bottom:16px;
+}
+.result-points-title{
+  font-size:12px;
+  font-weight:700;
+  color:var(--text-light);
+  letter-spacing:.08em;
+  margin-bottom:10px;
+}
+.result-point{
+  display:flex;
+  align-items:flex-start;
+  gap:8px;
+  font-size:13px;
+  color:var(--text-mid);
+  line-height:1.6;
+  margin-bottom:6px;
+}
+.result-point:last-child{margin-bottom:0;}
+.point-dot{color:var(--red);font-size:10px;margin-top:5px;flex-shrink:0;}
+
+.result-reassure{
+  font-size:13px;
+  color:var(--text-mid);
+  line-height:1.8;
+  padding:14px;
+  background:var(--red-pale);
+  border-radius:10px;
+  border-left:3px solid var(--red);
+}
+
+/* ===== CTA ===== */
+.cta-section{padding:0 16px 16px;}
+.cta-anon{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:12px;
+  margin-bottom:12px;
+  font-size:12px;
+  color:var(--text-light);
+}
+.anon-item{display:flex;align-items:center;gap:4px;}
+
+.cta-btn{
+  display:block;
+  width:100%;
+  padding:18px 16px;
+  border-radius:14px;
+  text-decoration:none;
+  text-align:center;
+  font-size:16px;
+  font-weight:900;
+  font-family:'Noto Sans JP',sans-serif;
+  letter-spacing:.05em;
+  position:relative;
+  transition:transform .15s,box-shadow .15s;
+  margin-bottom:10px;
+}
+.cta-btn:active{transform:scale(.98);}
+.cta-btn-primary{
+  background:linear-gradient(135deg,#C4243A,#E8445A);
+  color:#fff;
+  box-shadow:0 6px 24px rgba(232,68,90,.4);
+  border:none;
+}
+.cta-btn-arrow{
+  position:absolute;right:18px;top:50%;transform:translateY(-50%);
+  font-size:18px;opacity:.7;
+}
+.cta-note{
+  font-size:11.5px;
+  color:var(--text-light);
+  text-align:center;
+  line-height:1.7;
+}
+.cta-note a{color:var(--text-light);}
+
+/* ALGバッジ */
+.alg-badge{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  background:#fff;
+  border-radius:12px;
+  padding:14px;
+  border:1px solid #EEE;
+  margin-bottom:16px;
+}
+.alg-badge-icon{
+  width:48px;height:48px;
+  background:var(--gold);
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  color:#fff;
+  font-size:10px;
+  font-weight:700;
+  text-align:center;
+  line-height:1.3;
+  flex-shrink:0;
+}
+.alg-badge-text{font-size:12.5px;color:var(--text-mid);line-height:1.6;}
+.alg-badge-text strong{color:var(--text);font-size:13.5px;}
+
+/* ===== フッター ===== */
+footer{
+  padding:20px 16px 32px;
+  text-align:center;
+  font-size:11px;
+  color:#BBB;
+  border-top:1px solid #EEE;
+  background:#fff;
+}
+footer a{color:#BBB;}
+
+/* ===== AD表示（必須） ===== */
+.ad-label{
+  display:inline-block;
+  border:1px solid #CCC;
+  color:#999;
+  font-size:10px;
+  padding:1px 6px;
+  border-radius:3px;
+  margin-left:6px;
+  vertical-align:middle;
+}
+</style>
+</head>
+<body>
+
+<!-- 通知バー -->
+<div class="notice-bar">
+  <span>💬</span>
+  その違和感、気のせいかもしれません。でも、心がモヤモヤするなら…
+</div>
+
+<!-- FV画像（アップロード画像を使用） -->
+<div class="fv">
+  <img src="/mnt/user-data/uploads/fv_bg.png" class="fv-img" alt="ひとりで悩まないで。まずは、あなたの気持ちを整理してみませんか？">
+</div>
+
+<!-- FVサブ -->
+<div class="fv-sub">
+  <p class="fv-sub-text">浮気調査・不倫の不安を抱えるあなたへ</p>
+</div>
+
+<!-- 3アイコン -->
+<div class="icons-section">
+  <div class="icons-row">
+    <div class="icon-item">
+      <div class="icon-circle">🌀</div>
+      <p class="icon-label">最近、<em>違和感が</em><br>増えてきた</p>
+    </div>
+    <div class="icon-item">
+      <div class="icon-circle">📱</div>
+      <p class="icon-label">スマホを隠すなど、<br><em>行動が変わった</em></p>
+    </div>
+    <div class="icon-item">
+      <div class="icon-circle">💭</div>
+      <p class="icon-label">このままでいいのか<br><em>不安になる</em></p>
+    </div>
+  </div>
+</div>
+
+<!-- 共感帯 -->
+<div class="empathy-section">
+  <p class="empathy-lead">そう感じるのは、あなただけではありません。</p>
+  <p class="empathy-body">
+    無理に結論を出す必要はありません。<br>
+    まずは、状況を整理することから始めてみましょう。
+  </p>
+  <p class="empathy-note">
+    <strong>この診断でわかること：</strong><br>
+    あなたが感じている違和感が、どんなサインなのかを<br>
+    6つの質問で静かに整理します。
+  </p>
+</div>
+
+<!-- ===== 診断セクション ===== -->
+<div class="shindan-section">
+  <div class="shindan-header">
+    <div class="shindan-tag">無料チェック診断</div>
+    <h2 class="shindan-title">今の状況を、<em>6問</em>で整理しましょう</h2>
+    <p class="shindan-sub">所要時間：約1分 ／ 匿名OK ／ 個人情報不要</p>
+  </div>
+
+  <!-- プログレス -->
+  <div class="progress-wrap" id="progressWrap">
+    <div class="progress-label">
+      <span id="progressText">質問 1 / 6</span>
+      <span id="progressPct">0%</span>
+    </div>
+    <div class="progress-bar">
+      <div class="progress-fill" id="progressFill" style="width:0%"></div>
+    </div>
+  </div>
+
+  <!-- Q1 -->
+  <div class="q-card active" id="q1">
+    <p class="q-num">QUESTION 01</p>
+    <p class="q-text">最近、パートナーの様子に<br>変化を感じていますか？</p>
+    <div class="options" data-q="1" data-multi="false">
+      <button class="opt-btn" data-val="1" onclick="selectSingle(this,1)">
+        <span class="opt-icon">😌</span>
+        <span>特に変化はない</span>
+      </button>
+      <button class="opt-btn" data-val="2" onclick="selectSingle(this,1)">
+        <span class="opt-icon">🤔</span>
+        <span>少し気になることがある</span>
+      </button>
+      <button class="opt-btn" data-val="3" onclick="selectSingle(this,1)">
+        <span class="opt-icon">😟</span>
+        <span>明らかに違和感がある</span>
+      </button>
+    </div>
+    <button class="next-btn" id="next1" onclick="nextQ(1)">次の質問へ →</button>
+  </div>
+
+  <!-- Q2 -->
+  <div class="q-card" id="q2">
+    <p class="q-num">QUESTION 02</p>
+    <p class="q-text">気になる変化はどれに近いですか？</p>
+    <p class="q-note">※当てはまるものをすべて選んでください</p>
+    <div class="options" data-q="2" data-multi="true">
+      <button class="opt-btn multi" data-val="a" onclick="toggleMulti(this)">
+        <span class="opt-check">✓</span>
+        <span>スマホを隠すようになった</span>
+      </button>
+      <button class="opt-btn multi" data-val="b" onclick="toggleMulti(this)">
+        <span class="opt-check">✓</span>
+        <span>帰宅時間が変わった</span>
+      </button>
+      <button class="opt-btn multi" data-val="c" onclick="toggleMulti(this)">
+        <span class="opt-check">✓</span>
+        <span>連絡が減った／増えた</span>
+      </button>
+      <button class="opt-btn multi" data-val="d" onclick="toggleMulti(this)">
+        <span class="opt-check">✓</span>
+        <span>お金の使い方が変わった</span>
+      </button>
+      <button class="opt-btn multi" data-val="e" onclick="toggleMulti(this)">
+        <span class="opt-check">✓</span>
+        <span>急に優しくなった／冷たくなった</span>
+      </button>
+      <button class="opt-btn multi" data-val="f" onclick="toggleMulti(this)">
+        <span class="opt-check">✓</span>
+        <span>特に思い当たらない</span>
+      </button>
+    </div>
+    <button class="next-btn show" onclick="nextQ(2)">次の質問へ →</button>
+  </div>
+
+  <!-- Q3 -->
+  <div class="q-card" id="q3">
+    <p class="q-num">QUESTION 03</p>
+    <p class="q-text">その違和感は、どれくらい<br>続いていますか？</p>
+    <div class="options" data-q="3" data-multi="false">
+      <button class="opt-btn" data-val="1" onclick="selectSingle(this,3)">
+        <span class="opt-icon">🕐</span>
+        <span>最近気になり始めた</span>
+      </button>
+      <button class="opt-btn" data-val="2" onclick="selectSingle(this,3)">
+        <span class="opt-icon">📅</span>
+        <span>数週間〜数ヶ月続いている</span>
+      </button>
+      <button class="opt-btn" data-val="3" onclick="selectSingle(this,3)">
+        <span class="opt-icon">⏳</span>
+        <span>かなり前から感じている</span>
+      </button>
+    </div>
+    <button class="next-btn" id="next3" onclick="nextQ(3)">次の質問へ →</button>
+  </div>
+
+  <!-- Q4 -->
+  <div class="q-card" id="q4">
+    <p class="q-num">QUESTION 04</p>
+    <p class="q-text">今の気持ちに、一番近いものは<br>どれですか？</p>
+    <div class="options" data-q="4" data-multi="false">
+      <button class="opt-btn" data-val="1" onclick="selectSingle(this,4)">
+        <span class="opt-icon">🌤</span>
+        <span>気のせいかもしれない</span>
+      </button>
+      <button class="opt-btn" data-val="2" onclick="selectSingle(this,4)">
+        <span class="opt-icon">😔</span>
+        <span>何かありそうで不安</span>
+      </button>
+      <button class="opt-btn" data-val="3" onclick="selectSingle(this,4)">
+        <span class="opt-icon">😰</span>
+        <span>かなり怪しいと感じている</span>
+      </button>
+    </div>
+    <button class="next-btn" id="next4" onclick="nextQ(4)">次の質問へ →</button>
+  </div>
+
+  <!-- Q5 -->
+  <div class="q-card" id="q5">
+    <p class="q-num">QUESTION 05</p>
+    <p class="q-text">確認できていることは<br>ありますか？</p>
+    <div class="options" data-q="5" data-multi="false">
+      <button class="opt-btn" data-val="1" onclick="selectSingle(this,5)">
+        <span class="opt-icon">🔍</span>
+        <span>特にない</span>
+      </button>
+      <button class="opt-btn" data-val="2" onclick="selectSingle(this,5)">
+        <span class="opt-icon">❓</span>
+        <span>少し怪しい点がある</span>
+      </button>
+      <button class="opt-btn" data-val="3" onclick="selectSingle(this,5)">
+        <span class="opt-icon">⚠️</span>
+        <span>明確に気になる点がある</span>
+      </button>
+    </div>
+    <button class="next-btn" id="next5" onclick="nextQ(5)">次の質問へ →</button>
+  </div>
+
+  <!-- Q6 -->
+  <div class="q-card" id="q6">
+    <p class="q-num">QUESTION 06</p>
+    <p class="q-text">今後、どうしたいですか？</p>
+    <div class="options" data-q="6" data-multi="false">
+      <button class="opt-btn" data-val="1" onclick="selectSingle(this,6)">
+        <span class="opt-icon">🧭</span>
+        <span>とりあえず状況を整理したい</span>
+      </button>
+      <button class="opt-btn" data-val="2" onclick="selectSingle(this,6)">
+        <span class="opt-icon">🔎</span>
+        <span>事実をはっきりさせたい</span>
+      </button>
+      <button class="opt-btn" data-val="3" onclick="selectSingle(this,6)">
+        <span class="opt-icon">✊</span>
+        <span>具体的に行動したい</span>
+      </button>
+    </div>
+    <button class="next-btn" id="next6" onclick="showResult()">結果を見る →</button>
+  </div>
+
+  <!-- ===== 結果 ===== -->
+  <div id="result-section">
+
+    <!-- 🟢 ライト -->
+    <div id="result-green" class="result-wrap type-green" style="display:none;">
+      <div class="result-header">
+        <div><span class="result-type-tag">🌿 状況チェック結果</span></div>
+        <span class="result-icon">🍃</span>
+        <h3 class="result-title">今すぐ心配しすぎなくても<br>大丈夫かもしれません。<br>でも、<em>サインは出ています。</em></h3>
+      </div>
+      <div class="result-divider"></div>
+      <div class="result-body">
+        <p class="result-desc">
+          今の段階では、大きな問題を示すサインは多くありません。<br>
+          ただ、あなたが「気になる」と感じていること自体が、何かを感じ取っているサインかもしれません。
+        </p>
+        <div class="result-points">
+          <p class="result-points-title">📋 あなたの状況の整理</p>
+          <div class="result-point"><span class="point-dot">●</span><span>変化の兆候はまだ軽微な段階です</span></div>
+          <div class="result-point"><span class="point-dot">●</span><span>モヤモヤを抱えたまま過ごすのは、心身に負担がかかります</span></div>
+          <div class="result-point"><span class="point-dot">●</span><span>早めに状況を整理しておくことで、後悔を防げます</span></div>
+        </div>
+        <p class="result-reassure">
+          気になることを一人で抱え込む必要はありません。<br>
+          まずは「どんな選択肢があるか」を知るだけでも、気持ちが楽になることがあります。
+        </p>
+      </div>
+      <div class="cta-section">
+        <div class="alg-badge">
+          <div class="alg-badge-icon">弁護士法人<br>グループ</div>
+          <div class="alg-badge-text">
+            <strong>ALG探偵社</strong><br>
+            匿名・無料で相談内容を整理できます
+          </div>
+        </div>
+        <div class="cta-anon">
+          <span class="anon-item">🔒 匿名OK</span>
+          <span class="anon-item">📞 電話・メール対応</span>
+          <span class="anon-item">💰 相談無料</span>
+        </div>
+        <!-- ★ここにアフィリリンクを入れる★ -->
+        <a href="YOUR_AFFILIATE_LINK_HERE" class="cta-btn cta-btn-primary" target="_blank" rel="noopener">
+          今の状況を整理するための情報を見る
+          <span class="cta-btn-arrow">›</span>
+        </a>
+        <p class="cta-note">※外部サイト（ALG探偵社）に移動します<span class="ad-label">広告</span></p>
+      </div>
+    </div>
+
+    <!-- 🟡 グレー -->
+    <div id="result-yellow" class="result-wrap type-yellow" style="display:none;">
+      <div class="result-header">
+        <div><span class="result-type-tag">⚡ 状況チェック結果</span></div>
+        <span class="result-icon">🌀</span>
+        <h3 class="result-title">違和感が<em>積み重なって</em>います。<br>一度、状況を<em>整理</em>してみませんか。</h3>
+      </div>
+      <div class="result-divider"></div>
+      <div class="result-body">
+        <p class="result-desc">
+          いくつかのサインが重なっています。一時的なものかもしれませんが、こうした違和感が続く場合は、状況を整理しておくことをおすすめします。
+        </p>
+        <div class="result-points">
+          <p class="result-points-title">📋 あなたの状況の整理</p>
+          <div class="result-point"><span class="point-dot">●</span><span>複数の変化が重なっているサインが見られます</span></div>
+          <div class="result-point"><span class="point-dot">●</span><span>このまま放置すると、精神的な負担が増す可能性があります</span></div>
+          <div class="result-point"><span class="point-dot">●</span><span>状況を整理するだけでも、次の一歩が見えてきます</span></div>
+        </div>
+        <p class="result-reassure">
+          「相談する＝すぐ調査に踏み切る」ではありません。<br>
+          まずは話を聞いてもらうだけでも、モヤモヤが整理されます。
+        </p>
+      </div>
+      <div class="cta-section">
+        <div class="alg-badge">
+          <div class="alg-badge-icon">弁護士法人<br>グループ</div>
+          <div class="alg-badge-text">
+            <strong>ALG探偵社</strong><br>
+            弁護士指導のもと、証拠能力の高い調査を提供
+          </div>
+        </div>
+        <div class="cta-anon">
+          <span class="anon-item">🔒 匿名OK</span>
+          <span class="anon-item">📞 電話・メール対応</span>
+          <span class="anon-item">💰 相談無料</span>
+        </div>
+        <!-- ★ここにアフィリリンクを入れる★ -->
+        <a href="YOUR_AFFILIATE_LINK_HERE" class="cta-btn cta-btn-primary" target="_blank" rel="noopener">
+          無料で相談内容を整理する
+          <span class="cta-btn-arrow">›</span>
+        </a>
+        <p class="cta-note">※外部サイト（ALG探偵社）に移動します<span class="ad-label">広告</span></p>
+      </div>
+    </div>
+
+    <!-- 🔴 強 -->
+    <div id="result-red" class="result-wrap type-red" style="display:none;">
+      <div class="result-header">
+        <div><span class="result-type-tag">🔴 状況チェック結果</span></div>
+        <span class="result-icon">⚠️</span>
+        <h3 class="result-title">複数の<em>サイン</em>が重なっています。<br>早めに事実を確認することが、<br><em>あなたを守る</em>第一歩です。</h3>
+      </div>
+      <div class="result-divider"></div>
+      <div class="result-body">
+        <p class="result-desc">
+          あなたが感じている違和感は、複数のサインが重なっています。白黒はっきりさせることで、次の選択ができるようになります。
+        </p>
+        <div class="result-points">
+          <p class="result-points-title">📋 あなたの状況の整理</p>
+          <div class="result-point"><span class="point-dot">●</span><span>複数の具体的なサインが見られます</span></div>
+          <div class="result-point"><span class="point-dot">●</span><span>事実確認をすることで、最善の選択ができるようになります</span></div>
+          <div class="result-point"><span class="point-dot">●</span><span>弁護士法人グループの探偵社なら、証拠の法的活用まで相談できます</span></div>
+        </div>
+        <p class="result-reassure">
+          一人で抱え込まないでください。<br>
+          匿名でも、まず話を聞いてもらうことから始められます。
+        </p>
+      </div>
+      <div class="cta-section">
+        <div class="alg-badge">
+          <div class="alg-badge-icon">弁護士法人<br>グループ</div>
+          <div class="alg-badge-text">
+            <strong>ALG探偵社</strong><br>
+            解約手数料0円・契約の強要一切なし
+          </div>
+        </div>
+        <div class="cta-anon">
+          <span class="anon-item">🔒 匿名OK</span>
+          <span class="anon-item">📞 電話・メール対応</span>
+          <span class="anon-item">💰 相談無料</span>
+        </div>
+        <!-- ★ここにアフィリリンクを入れる★ -->
+        <a href="YOUR_AFFILIATE_LINK_HERE" class="cta-btn cta-btn-primary" target="_blank" rel="noopener">
+          匿名で無料相談する
+          <span class="cta-btn-arrow">›</span>
+        </a>
+        <p class="cta-note">※外部サイト（ALG探偵社）に移動します<span class="ad-label">広告</span></p>
+      </div>
+    </div>
+
+    <!-- 再診断 -->
+    <div style="text-align:center;padding:8px 16px 24px;">
+      <button onclick="resetShindan()" style="background:none;border:none;color:var(--text-light);font-size:13px;cursor:pointer;text-decoration:underline;font-family:'Noto Sans JP',sans-serif;">
+        ↩ もう一度診断する
+      </button>
+    </div>
+
+  </div><!-- /result-section -->
+
+</div><!-- /shindan-section -->
+
+<!-- フッター -->
+<footer>
+  <p>本診断はあなたの状況を整理するためのものです。診断結果は断定的な判断を行うものではありません。</p>
+  <p style="margin-top:6px;">当ページはアフィリエイト広告を含みます。<span class="ad-label">広告</span></p>
+</footer>
+
+<script>
+// スコア管理
+const answers = {q1:null, q2:[], q3:null, q4:null, q5:null, q6:null};
+
+function updateProgress(current){
+  const pct = Math.round(((current-1)/6)*100);
+  document.getElementById('progressFill').style.width = pct+'%';
+  document.getElementById('progressText').textContent = '質問 '+current+' / 6';
+  document.getElementById('progressPct').textContent = pct+'%';
+}
+
+function selectSingle(btn, qNum){
+  const card = document.getElementById('q'+qNum);
+  card.querySelectorAll('.opt-btn').forEach(b=>b.classList.remove('selected'));
+  btn.classList.add('selected');
+  answers['q'+qNum] = parseInt(btn.dataset.val);
+  const nb = document.getElementById('next'+qNum);
+  if(nb) nb.classList.add('show');
+}
+
+let q2checked = [];
+function toggleMulti(btn){
+  btn.classList.toggle('checked');
+  const val = btn.dataset.val;
+  if(btn.classList.contains('checked')){
+    if(!q2checked.includes(val)) q2checked.push(val);
+  } else {
+    q2checked = q2checked.filter(v=>v!==val);
+  }
+  answers.q2 = q2checked;
+}
+
+function nextQ(current){
+  if(answers['q'+current]===null && current!==2){return;}
+  document.getElementById('q'+current).classList.remove('active');
+  const next = current+1;
+  document.getElementById('q'+next).classList.add('active');
+  updateProgress(next);
+  window.scrollTo({top:document.querySelector('.shindan-section').offsetTop-60,behavior:'smooth'});
+}
+
+function calcScore(){
+  let score = 0;
+  // Q1
+  if(answers.q1===2) score+=1;
+  if(answers.q1===3) score+=3;
+  // Q2: サインの数
+  const heavy = ['a','b','c','d','e'];
+  const cnt = answers.q2.filter(v=>heavy.includes(v)).length;
+  if(cnt===1) score+=1;
+  if(cnt===2) score+=2;
+  if(cnt>=3) score+=4;
+  // Q3
+  if(answers.q3===2) score+=1;
+  if(answers.q3===3) score+=2;
+  // Q4
+  if(answers.q4===2) score+=1;
+  if(answers.q4===3) score+=3;
+  // Q5
+  if(answers.q5===2) score+=1;
+  if(answers.q5===3) score+=3;
+  // Q6（行動意欲）
+  if(answers.q6===2) score+=1;
+  if(answers.q6===3) score+=2;
+  return score;
+}
+
+function showResult(){
+  if(answers.q6===null) return;
+  document.getElementById('q6').classList.remove('active');
+  document.getElementById('progressFill').style.width='100%';
+  document.getElementById('progressText').textContent='診断完了';
+  document.getElementById('progressPct').textContent='100%';
+
+  const score = calcScore();
+  let type = 'green';
+  if(score>=7) type='red';
+  else if(score>=3) type='yellow';
+
+  document.getElementById('result-section').style.display='block';
+  document.getElementById('result-section').classList.add('active');
+  document.getElementById('result-'+type).style.display='block';
+
+  window.scrollTo({top:document.getElementById('result-section').offsetTop-40,behavior:'smooth'});
+}
+
+function resetShindan(){
+  // リセット
+  Object.assign(answers,{q1:null,q2:[],q3:null,q4:null,q5:null,q6:null});
+  q2checked=[];
+  for(let i=1;i<=6;i++){
+    const card=document.getElementById('q'+i);
+    card.classList.remove('active');
+    card.querySelectorAll('.opt-btn').forEach(b=>{
+      b.classList.remove('selected','checked');
+    });
+    const nb=document.getElementById('next'+i);
+    if(nb&&i!==2) nb.classList.remove('show');
+  }
+  document.getElementById('result-section').style.display='none';
+  document.getElementById('result-section').classList.remove('active');
+  ['green','yellow','red'].forEach(t=>{
+    document.getElementById('result-'+t).style.display='none';
+  });
+  document.getElementById('q1').classList.add('active');
+  updateProgress(1);
+  window.scrollTo({top:document.querySelector('.shindan-section').offsetTop-60,behavior:'smooth'});
+}
+
+// 初期化
+updateProgress(1);
+</script>
+</body>
+</html>
