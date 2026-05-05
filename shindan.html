@@ -74,8 +74,7 @@ body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--text
 .options{display:flex;flex-direction:column;gap:10px;}
 .opt-btn{display:flex;align-items:center;gap:12px;padding:14px 16px;background:#FAFAFA;border:1.5px solid #E8E0E2;border-radius:10px;cursor:pointer;font-size:14px;color:var(--text);font-weight:500;transition:all .2s;text-align:left;width:100%;font-family:'Noto Sans JP',sans-serif;}
 .opt-btn:hover,.opt-btn.selected{background:var(--red-light);border-color:var(--red);color:var(--red-dark);}
-.opt-icon{width:28px;height:28px;border-radius:50%;background:#F0ECF0;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;transition:background .2s;}
-.opt-btn.selected .opt-icon{background:var(--red);color:#fff;}
+
 .opt-check{width:20px;height:20px;border:2px solid #CCC;border-radius:4px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:11px;transition:all .2s;}
 .opt-btn.checked .opt-check{background:var(--red);border-color:var(--red);color:#fff;}
 .opt-btn.checked{background:var(--red-light);border-color:var(--red);}
@@ -149,9 +148,9 @@ footer{padding:20px 16px 32px;text-align:center;font-size:11px;color:#BBB;border
     <p class="q-num">QUESTION 01</p>
     <p class="q-text">最近、パートナーの様子に<br>変化を感じていますか？</p>
     <div class="options">
-      <button class="opt-btn" data-val="1" onclick="selectSingle(this,1)"><span class="opt-icon">😌</span><span>特に変化はない</span></button>
-      <button class="opt-btn" data-val="2" onclick="selectSingle(this,1)"><span class="opt-icon">🤔</span><span>少し気になることがある</span></button>
-      <button class="opt-btn" data-val="3" onclick="selectSingle(this,1)"><span class="opt-icon">😟</span><span>明らかに違和感がある</span></button>
+      <button class="opt-btn" data-val="1" onclick="selectSingle(this,1)"><span>特に変化はない</span></button>
+      <button class="opt-btn" data-val="2" onclick="selectSingle(this,1)"><span>少し気になることがある</span></button>
+      <button class="opt-btn" data-val="3" onclick="selectSingle(this,1)"><span>明らかに違和感がある</span></button>
     </div>
     <button class="next-btn" id="next1" onclick="nextQ(1)">次の質問へ →</button>
   </div>
@@ -175,9 +174,9 @@ footer{padding:20px 16px 32px;text-align:center;font-size:11px;color:#BBB;border
     <p class="q-num">QUESTION 03</p>
     <p class="q-text">その違和感は、どれくらい<br>続いていますか？</p>
     <div class="options">
-      <button class="opt-btn" data-val="1" onclick="selectSingle(this,3)"><span class="opt-icon">🕐</span><span>最近気になり始めた</span></button>
-      <button class="opt-btn" data-val="2" onclick="selectSingle(this,3)"><span class="opt-icon">📅</span><span>数週間〜数ヶ月続いている</span></button>
-      <button class="opt-btn" data-val="3" onclick="selectSingle(this,3)"><span class="opt-icon">⏳</span><span>かなり前から感じている</span></button>
+      <button class="opt-btn" data-val="1" onclick="selectSingle(this,3)"><span>最近気になり始めた</span></button>
+      <button class="opt-btn" data-val="2" onclick="selectSingle(this,3)"><span>数週間〜数ヶ月続いている</span></button>
+      <button class="opt-btn" data-val="3" onclick="selectSingle(this,3)"><span>かなり前から感じている</span></button>
     </div>
     <button class="next-btn" id="next3" onclick="nextQ(3)">次の質問へ →</button>
   </div>
@@ -186,9 +185,9 @@ footer{padding:20px 16px 32px;text-align:center;font-size:11px;color:#BBB;border
     <p class="q-num">QUESTION 04</p>
     <p class="q-text">今の気持ちに、一番近いものは<br>どれですか？</p>
     <div class="options">
-      <button class="opt-btn" data-val="1" onclick="selectSingle(this,4)"><span class="opt-icon">🌤</span><span>気のせいかもしれない</span></button>
-      <button class="opt-btn" data-val="2" onclick="selectSingle(this,4)"><span class="opt-icon">😔</span><span>何かありそうで不安</span></button>
-      <button class="opt-btn" data-val="3" onclick="selectSingle(this,4)"><span class="opt-icon">😰</span><span>かなり怪しいと感じている</span></button>
+      <button class="opt-btn" data-val="1" onclick="selectSingle(this,4)"><span>気のせいかもしれない</span></button>
+      <button class="opt-btn" data-val="2" onclick="selectSingle(this,4)"><span>何かありそうで不安</span></button>
+      <button class="opt-btn" data-val="3" onclick="selectSingle(this,4)"><span>かなり怪しいと感じている</span></button>
     </div>
     <button class="next-btn" id="next4" onclick="nextQ(4)">次の質問へ →</button>
   </div>
@@ -197,9 +196,9 @@ footer{padding:20px 16px 32px;text-align:center;font-size:11px;color:#BBB;border
     <p class="q-num">QUESTION 05</p>
     <p class="q-text">確認できていることは<br>ありますか？</p>
     <div class="options">
-      <button class="opt-btn" data-val="1" onclick="selectSingle(this,5)"><span class="opt-icon">🔍</span><span>特にない</span></button>
-      <button class="opt-btn" data-val="2" onclick="selectSingle(this,5)"><span class="opt-icon">❓</span><span>少し怪しい点がある</span></button>
-      <button class="opt-btn" data-val="3" onclick="selectSingle(this,5)"><span class="opt-icon">⚠️</span><span>明確に気になる点がある</span></button>
+      <button class="opt-btn" data-val="1" onclick="selectSingle(this,5)"><span>特にない</span></button>
+      <button class="opt-btn" data-val="2" onclick="selectSingle(this,5)"><span>少し怪しい点がある</span></button>
+      <button class="opt-btn" data-val="3" onclick="selectSingle(this,5)"><span>明確に気になる点がある</span></button>
     </div>
     <button class="next-btn" id="next5" onclick="nextQ(5)">次の質問へ →</button>
   </div>
@@ -208,9 +207,9 @@ footer{padding:20px 16px 32px;text-align:center;font-size:11px;color:#BBB;border
     <p class="q-num">QUESTION 06</p>
     <p class="q-text">今後、どうしたいですか？</p>
     <div class="options">
-      <button class="opt-btn" data-val="1" onclick="selectSingle(this,6)"><span class="opt-icon">🧭</span><span>とりあえず状況を整理したい</span></button>
-      <button class="opt-btn" data-val="2" onclick="selectSingle(this,6)"><span class="opt-icon">🔎</span><span>事実をはっきりさせたい</span></button>
-      <button class="opt-btn" data-val="3" onclick="selectSingle(this,6)"><span class="opt-icon">✊</span><span>具体的に行動したい</span></button>
+      <button class="opt-btn" data-val="1" onclick="selectSingle(this,6)"><span>とりあえず状況を整理したい</span></button>
+      <button class="opt-btn" data-val="2" onclick="selectSingle(this,6)"><span>事実をはっきりさせたい</span></button>
+      <button class="opt-btn" data-val="3" onclick="selectSingle(this,6)"><span>具体的に行動したい</span></button>
     </div>
     <button class="next-btn" id="next6" onclick="showResult()">結果を見る →</button>
   </div>
